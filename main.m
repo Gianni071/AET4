@@ -97,3 +97,8 @@ for i = 1:3
     fprintf('Normalized Heat Density: %f kW/m^3/bar \n', heat_density_norm(i))
     fprintf('\n')
 end
+
+%% Calculate Tad for all points
+
+% Point 1
+[richT1,diffarr] = FlameTemp(T3(1),1);
