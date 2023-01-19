@@ -1,4 +1,4 @@
-function[Tad,diffarr] = FlameTemp(T3,phi)
+function[Tad] = FlameTemp(T3,phi)
 
 %% Reactants enthalpies from T3 (Interpolation)
 kcaltokj = 4.184;
@@ -78,7 +78,7 @@ end
 
 Tarr = [];
 diffarr = [];
-for T = drange(T3:1:3000)
+for T = drange(298:1:3000)
     % N2 pols
     if T < 2000
         N2pols = [An2array(2) Bn2array(2) Cn2array(2) Dn2array(2) En2array(2) Fn2array(2) Gn2array(2)];
@@ -145,19 +145,19 @@ for T = drange(T3:1:3000)
     dHN298 = 8.89;
     
     if phi > 1
-        lefthand = heat_of_reaction/phi + dHf + nO2tot*dOx + nN2*dHN298;
-        righthand = (11/phi)*dHCO + (11/phi)*dHwat + nN2*dHN2 + nfuel*dHfuel;
+        lefthand = heat_of_reaction/phi + dHf + nO2tot*dOx;
+        righthand = nCO2*dHCO + nH2O*dHwat + nN2*dHN2 + nfuel*dHfuel;
     end
     
     if phi == 1
-        lefthand = heat_of_reaction + dHf + nO2tot*dOx + nN2*dHN298;
+        lefthand = heat_of_reaction + dHf + nO2tot*dOx;
         righthand = nCO2*dHCO + nH2O*dHwat + nN2*dHN2;
     end
     
     if phi < 1
         nO2 = nO2tot - 16.5;
-        lefthand = heat_of_reaction + nO2tot*dOx + nN2*dHN298;
-        righthand = 11*dHCO + 11*dHwat + nN2*dHN2 + nO2*dHO2;
+        lefthand = heat_of_reaction + dHf + nO2tot*dOx;
+        righthand = nCO2*dHCO + nH2O*dHwat + nN2*dHN2 + nO2*dHO2;
     end
     
     diff = abs(righthand - lefthand);

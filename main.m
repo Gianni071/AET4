@@ -55,12 +55,16 @@ lean.m_dot_air = quench.m_dot_air + 2*X3*m_dot_air;   % All remaining air is bur
 lean.AFR = lean.m_dot_air ./ lean.m_dot_fuel;
 lean.phi = AFR_st ./ lean.AFR;
 
+%% Calculate Tad for all points
 
+% Point 1
+for i = drange(1:1:3)
+    rich.T_ad(i) = FlameTemp(T3(i),rich.phi(i));
+    quench.T_ad(i) = FlameTemp(T3(i),quench.phi(i));
+    lean.T_ad(i) = FlameTemp(T3(1),lean.phi(i));
+end
 
-% Residence time
-rich.T_ad = [2300 2400 2500];
-quench.T_ad = [1600 1700 1800];
-lean.T_ad = [1400 1500 1600];
+%% Residence time
 
 R = 287;
 
@@ -75,6 +79,11 @@ M = 0.15429;                                                                % kg
 can_volume = 0.012;                                                         % m^3
 heat_density_abs = m_dot_fuel ./ M .* heat_of_reaction ./ can_volume;       % kW/m^3
 heat_density_norm = heat_density_abs ./ P3 .* 1e5;                          % kW/m^3/bar
+
+
+
+
+
 
 fprintf('------------------------------\n')
 for i = 1:3
@@ -98,7 +107,17 @@ for i = 1:3
     fprintf('\n')
 end
 
-%% Calculate Tad for all points
+%% Plot Flame Temp as a function of equivalence ratio (T3 = 298)
 
-% Point 1
-[richT1,diffarr] = FlameTemp(T3(1),1);
+Tarray = [];
+phiarray = [];
+
+for j = drange(0:0.01:2)
+    Tad = FlameTemp(765,j);
+    Tarray = [Tarray Tad];
+    phiarray = [phiarray j];
+end
+
+
+plot(phiarray,Tarray)
+
