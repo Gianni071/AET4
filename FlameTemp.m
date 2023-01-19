@@ -142,6 +142,7 @@ for T = drange(298:1:3000)
     dHfuel = dHfuel - (Hffuel298*1000);
     dHfuel = dHfuel/1000;
     
+    
     dHN298 = 8.89;
     
     if phi > 1
@@ -157,13 +158,13 @@ for T = drange(298:1:3000)
     if phi < 1
         nO2 = nO2tot - 16.5;
         lefthand = heat_of_reaction + dHf + nO2tot*dOx;
-        righthand = nCO2*dHCO + nH2O*dHwat + nN2*dHN2 + nO2*dHO2;
+        righthand = 11*dHCO + 11*dHwat + nN2*dHN2 + nO2*dHO2;
     end
     
     diff = abs(righthand - lefthand);
     diffarr = [diffarr diff];
     Tarr = [Tarr T];
 end
-    
+
 [discard,i] = min(diffarr);
 Tad = Tarr(i);

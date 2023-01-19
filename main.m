@@ -58,7 +58,7 @@ lean.phi = AFR_st ./ lean.AFR;
 %% Calculate Tad for all points
 
 % Point 1
-for i = drange(1:1:3)
+for i = drange(1:3)
     rich.T_ad(i) = FlameTemp(T3(i),rich.phi(i));
     quench.T_ad(i) = FlameTemp(T3(i),quench.phi(i));
     lean.T_ad(i) = FlameTemp(T3(1),lean.phi(i));
@@ -111,13 +111,22 @@ end
 
 Tarray = [];
 phiarray = [];
+phirange = linspace(0,2,200);
 
-for j = drange(0:0.01:2)
-    Tad = FlameTemp(765,j);
-    Tarray = [Tarray Tad];
-    phiarray = [phiarray j];
+for j = drange(1:length(phirange))
+    for k = drange(1:3)
+        Tad = FlameTemp(T3(k),phirange(j));
+        Tarray(k,j) = Tad;
+        phiarray(k,j) = phirange(j);
+    end
 end
 
-
-plot(phiarray,Tarray)
-
+plot(phiarray(1,:),Tarray(1,:),'r')
+hold on
+plot(phiarray(2,:),Tarray(2,:),'b')
+plot(phiarray(3,:),Tarray(3,:),'g')
+legend("Point 1","Point 2","Point 3")
+grid()
+plot(rich.phi(1),rich.T_ad(1),"x")
+labels = "Rich"
+text(rich.phi(1),rich.T_ad(1),labels,'VerticalAlignment','top','HorizontalAlignment','right')
