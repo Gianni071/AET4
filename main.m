@@ -121,12 +121,48 @@ for j = drange(1:length(phirange))
     end
 end
 
-plot(phiarray(1,:),Tarray(1,:),'r')
+%Plot Point 1
+plot(phiarray(1,:),Tarray(1,:))
 hold on
-plot(phiarray(2,:),Tarray(2,:),'b')
-plot(phiarray(3,:),Tarray(3,:),'g')
-legend("Point 1","Point 2","Point 3")
+pointsarray1 = [rich.phi(1),quench.phi(1),lean.phi(1)];
+pointsarray2 = [rich.T_ad(1),quench.T_ad(1),lean.T_ad(1)];
+plot(pointsarray1,pointsarray2,"rx")
+labels = ["R","Q","L"];
+text(pointsarray1,pointsarray2,labels,'VerticalAlignment','top','HorizontalAlignment','left')
 grid()
-plot(rich.phi(1),rich.T_ad(1),"x")
-labels = "Rich"
-text(rich.phi(1),rich.T_ad(1),labels,'VerticalAlignment','top','HorizontalAlignment','right')
+
+xlabel("\phi [-]")
+ylabel("T_{ad} [K]")
+figure()
+hold off
+%Plot Point 2
+plot(phiarray(2,:),Tarray(2,:))
+hold on
+pointsarray3 = [rich.phi(2),quench.phi(2),lean.phi(2)];
+pointsarray4 = [rich.T_ad(2),quench.T_ad(2),lean.T_ad(2)];
+plot(pointsarray3,pointsarray4,"rx")
+labels = ["R","Q","L"];
+text(pointsarray3,pointsarray4,labels,'VerticalAlignment','top','HorizontalAlignment','left')
+grid()
+
+xlabel("\phi [-]")
+ylabel("T_{ad} [K]")
+figure()
+%Plot Point 3
+plot(phiarray(3,:),Tarray(3,:))
+hold on
+pointsarray5 = [rich.phi(3),quench.phi(3),lean.phi(3)];
+pointsarray6 = [rich.T_ad(3),quench.T_ad(3),lean.T_ad(3)];
+plot(pointsarray5,pointsarray6,"rx")
+labels = ["R","Q","L"];
+text(pointsarray5,pointsarray6,labels,'VerticalAlignment','top','HorizontalAlignment','left')
+grid()
+
+xlabel("\phi [-]")
+ylabel("T_{ad} [K]")
+
+
+
+
+
+
